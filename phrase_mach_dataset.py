@@ -3,6 +3,7 @@ from spacy.matcher import PhraseMatcher
 import pandas as pd
 from openpyxl import load_workbook
 import re
+import csv
 
 def keep_letters(cell):
     if isinstance(cell, str):  # Check if the cell is a string
@@ -19,6 +20,8 @@ labels_raw_data = pd.read_excel(lables_taxonomy_file)
 
 # Select specific columns
 selected_labels_data = labels_raw_data.iloc[:, [0]] 
+
+# new_labels_format = list()
 
 for x in range(0, len(selected_labels_data)):
 # for x in range(10, 50):
@@ -43,6 +46,8 @@ for x in range(0, len(selected_labels_data)):
     label_phrases = [item for item in label_phrases if item]
 
     print("Search for {}".format(label_phrases))
+
+    # new_labels_format.append(" ".join(label_phrases))
 
     companies_data_file = 'ml_insurance_challenge.csv'
     companies_raw_data = pd.read_csv(companies_data_file)

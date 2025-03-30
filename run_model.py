@@ -60,11 +60,11 @@ with open("label_map.json", "r") as f:
 #Reverse mapping for lookup
 label_map = {int(idx): label for idx, label in dict_label_map.items()}
 
-df = pd.read_excel("ml_insurance_challenge_pm.xlsx")
-features = df[['business_tags', 'sector', 'category', 'niche']].fillna('')
+df = pd.read_excel("ml_insurance_challenge_phrase_mach.xlsx")
+features = df[['description', 'business_tags', 'sector', 'category', 'niche']].fillna('')
 df['text'] = features.apply(lambda x: ' '.join(x), axis=1)
 
-if 'labels' in df.columns:
+if 'insurance_label' in df.columns:
     #Iterate through each row and check for empty values in the labels column
     for index, row in df.iterrows():
         if pd.isna(row['labels']):  #Check if the value is NaN (empty)

@@ -41,7 +41,7 @@ def train_model(model, dataloader, criterion, optimizer, epochs=3):
 df = pd.read_csv("formatted_dataset.csv") 
 
 # Remove rows where 'labels' column is empty
-df = df[df['labels'].notna()] 
+df = df[df['insurance_label'].notna()] 
 
 # Extract features and labels
 features = df[['description', 'business_tags', 'sector', 'category', 'niche']].fillna('')
@@ -49,16 +49,23 @@ features = df[['description', 'business_tags', 'sector', 'category', 'niche']].f
 # Combine features into a single text column
 df['text'] = features.apply(lambda x: ' '.join(x), axis=1)
 
-df['labels'] = df['labels'].apply(lambda x: x.split(','))  # Convert string to list
+df['insurance_label'] = df['insurance_label'].apply(lambda x: x.split(','))  # Convert string to list
 
 # Encode labels
 mlb = MultiLabelBinarizer()
-labels_encoded = mlb.fit_transform(df['labels'])
+labels_encoded = mlb.fit_transform(df['insurance_label'])
 
-# num_labels = len(mlb.classes_)
+num_labels = len(mlb.classes_)
 # print(mlb.classes_)
 # print(num_labels)
-print(f"Number of classes found{len(mlb.classes_)}")
+print(f"Number of classes found {len(mlb.classes_)}")
+
+data = pd.read_csv("labels_list.csv")
+# print(data.iloc[:, 0].tolist())
+
+not_common_elements = list(set(mlb.classes_).symmetric_difference(set(data.iloc[:, 0].tolist())))
+print(not_common_elements)
+
 
 # Create a label mapping
 dict_label_map = {idx: label for idx, label in enumerate(mlb.classes_)}

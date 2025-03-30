@@ -47,8 +47,11 @@ data['niche'] = data['niche'].apply(remove_stopwords)
 # Split the labels column into individual labels
 data['labels'] = data['labels'].apply(lambda x: [label.strip() for label in x.split(',')])
 
+# Rename a column
+data = data.rename(columns={'labels': 'insurance_label'})
+
 # Expand the labels into separate rows for better readability
-formatted_data = data.explode('labels')
+formatted_data = data.explode('insurance_label')
 
 # Save the data into a CSV file
 formatted_data.to_csv('formatted_dataset.csv', index=False)
