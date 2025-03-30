@@ -1,4 +1,4 @@
-# VeridionMLChallenge
+# Challenge
 
 1. Run phrase_mach_dataset.py in order to generate labels by matching the words from taxonomy labels.
 2. Run preprocessing_dataset.py in order to process the dataset: lowercase, keep only letters, remove stop words (spacy stop words), remove labes if there is any duplicate in the cell.
